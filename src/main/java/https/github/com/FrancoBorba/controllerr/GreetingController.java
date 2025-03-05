@@ -1,4 +1,4 @@
-package https.github.com.FrancoBorba.controller;
+package https.github.com.FrancoBorba.controllerr;
 
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -14,6 +14,8 @@ public class GreetingController {
   private static final String template = "Hello, %s! "; // Define a mensagem de saudacao
   private final AtomicLong counter = new AtomicLong(); // criacao do id (evita concorrencia)
 
+    // http://localhost:8080/greeting?name=Franco
+    // Query Parameters
   @RequestMapping("/greeting") // para ser reconhecido como um metodo exposto via http
   public Greeting greeting(
     @RequestParam(value = "name" , defaultValue = "World") // captura os parametros da url

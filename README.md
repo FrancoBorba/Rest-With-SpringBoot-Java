@@ -3,7 +3,9 @@
 Este repositório contém os estudos e projetos desenvolvidos durante o curso de **Java Spring** ministrado pelo professor **Leandro Costa** na plataforma **Udemy**.
 
 ## 📌 Conteúdo do Curso
+
 O curso abrange conceitos fundamentais e práticos do **Spring Framework**, incluindo:
+
 - Introdução ao Spring Boot
 - Desenvolvimento de APIs RESTful
 - Uso de **Spring MVC**
@@ -12,6 +14,7 @@ O curso abrange conceitos fundamentais e práticos do **Spring Framework**, incl
 - Testes e boas práticas
 
 ## 🛠 Tecnologias Utilizadas
+
 - **Java 21**
 - **Spring Boot**
 - **Maven**
@@ -21,6 +24,7 @@ O curso abrange conceitos fundamentais e práticos do **Spring Framework**, incl
 - **Postman** (para testes de APIs)
 
 ## 📂 Estrutura do Repositório
+
 ```
 JavaSpring/
 │-- src/main/java/
@@ -35,6 +39,7 @@ JavaSpring/
 ```
 
 ## 🚀 Como Rodar o Projeto
+
 1. Clone este repositório:
    ```bash
    git clone https://github.com/FrancoBorba/JavaSpring-CursoUdemy.git
@@ -54,10 +59,10 @@ JavaSpring/
    ```
 
 ## 📝 Notas Pessoais
+
 Este repositório serve como material de estudo e referência para meus projetos futuros utilizando **Java Spring**. Todos os exercícios e projetos aqui foram desenvolvidos seguindo as aulas do curso.
 
 ---
-📚 **Curso:** [Udemy - Java Spring do Zero ao Avançado](https://www.udemy.com/)
-👨‍🏫 **Instrutor:** Leandro Costa
-🚀 **Autor:** Franco Ribeiro Borba
+
+📚 **Curso:** [Udemy - Java Spring do Zero ao Avançado](https://www.udemy.com/) 👨‍🏫 **Instrutor:** Leandro Costa 🚀 **Autor:** Franco Ribeiro Borba
 
