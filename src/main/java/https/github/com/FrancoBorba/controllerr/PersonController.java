@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import https.github.com.FrancoBorba.PersonServices;
 import https.github.com.FrancoBorba.model.Person;
+import https.github.com.FrancoBorba.services.PersonServices;
 
 @RestController
 @RequestMapping("/person")
@@ -24,7 +24,7 @@ public class PersonController {
   method = RequestMethod.GET ,
   produces = MediaType.APPLICATION_JSON_VALUE) 
   public Person findByID( // end point GET
-    @PathVariable("id") String id ){
+    @PathVariable("id") Long id ){
       return service.findByID(id);
     }
 
@@ -59,7 +59,7 @@ public class PersonController {
     method = RequestMethod.DELETE 
 
   )
-  public void delete(@PathVariable("id") String id){
+  public void delete(@PathVariable("id") Long id){
   service.delete(id);
   }
 

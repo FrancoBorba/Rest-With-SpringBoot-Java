@@ -2,6 +2,16 @@ package https.github.com.FrancoBorba.model;
 
 import java.io.Serializable;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "person") // quando o nome da tabela eh igual tanto na entidade como no bd eh opcional especificar
+// esppecificado para fins de estudo
 public class Person implements Serializable {
   
   private static final long serialVersionUID = 1L;
@@ -10,10 +20,20 @@ public class Person implements Serializable {
 
   }
 
+  @Id // mapeando os atributos , nao precisa especificar que eh uma coluna
+  @GeneratedValue(strategy = GenerationType.IDENTITY) // forma de geracao do id
   private Long id;
+
+  @Column(name = "fist_name" , nullable = false , length = 80)
   private String firstName;
+
+  @Column(name = "last_name" , nullable = false , length = 80)
   private String lastName;
+
+  @Column( nullable = false , length = 100) // quando nao passa o nome ja se sabe que eh adsress
   private String address;
+
+  @Column( nullable = false , length = 6) // quando nao passa o nome ja se sabe que eh gender
   private String gender;
 
   public Long getId() {

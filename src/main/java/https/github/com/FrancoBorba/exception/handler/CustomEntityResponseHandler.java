@@ -11,7 +11,8 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import https.github.com.FrancoBorba.exception.ExceptionResponse;
-import https.github.com.FrancoBorba.exception.UnsupportedMathOpperationExcpetion;
+import https.github.com.FrancoBorba.exception.ResourceNotFoundExcpetion;
+
 
 
 
@@ -28,12 +29,12 @@ public class CustomEntityResponseHandler extends ResponseEntityExceptionHandler{
      return new ResponseEntity<>(response , HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
-   @ExceptionHandler(UnsupportedMathOpperationExcpetion.class)
-  public final ResponseEntity<ExceptionResponse> handleBadRequestExceptions (Exception ex , WebRequest request){
+   @ExceptionHandler(ResourceNotFoundExcpetion.class)
+  public final ResponseEntity<ExceptionResponse> handleNotFoundExceptions (Exception ex , WebRequest request){
     ExceptionResponse response = new ExceptionResponse(new Date(),
      ex.getMessage(), 
      request.getDescription(false));
 
-     return new ResponseEntity<>(response , HttpStatus.BAD_REQUEST);
+     return new ResponseEntity<>(response , HttpStatus.NOT_FOUND);
   }
 }
