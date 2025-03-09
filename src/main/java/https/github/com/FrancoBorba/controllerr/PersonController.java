@@ -4,10 +4,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import https.github.com.FrancoBorba.model.Person;
@@ -20,24 +24,21 @@ public class PersonController {
   @Autowired
   private PersonServices service; // com a injencao de dependencia nao se precisa mais do new
 
-  @RequestMapping(value ="/{id}" ,
-  method = RequestMethod.GET ,
+  @GetMapping(value ="/{id}" ,
   produces = MediaType.APPLICATION_JSON_VALUE) 
   public Person findByID( // end point GET
     @PathVariable("id") Long id ){
       return service.findByID(id);
     }
 
-  @RequestMapping(
-  method = RequestMethod.GET ,
+  @GetMapping(  
   produces = MediaType.APPLICATION_JSON_VALUE)
   public List<Person> findAll( ){ // end point GET
     
       return service.findAll();
     }
 
-  @RequestMapping(
-    method = RequestMethod.POST ,
+  @PostMapping(
     consumes = MediaType.APPLICATION_JSON_VALUE,
     produces = MediaType.APPLICATION_JSON_VALUE
   )
@@ -45,8 +46,7 @@ public class PersonController {
     return service.create(person);
   }
 
-  @RequestMapping(
-    method = RequestMethod.PUT ,
+  @PutMapping(
     consumes =  MediaType.APPLICATION_JSON_VALUE ,
     produces = MediaType.APPLICATION_JSON_VALUE
   )
@@ -54,13 +54,11 @@ public class PersonController {
     return service.update(person);
   }
 
-  @RequestMapping(
-    value = "/{id}",
-    method = RequestMethod.DELETE 
+  @DeleteMapping(value = "/{id}")
+  public ResponseEntity<?> delete(@PathVariable("id") Long id){
+     service.delete(id);
 
-  )
-  public void delete(@PathVariable("id") Long id){
-  service.delete(id);
+     return ResponseEntity.noContent().build(); // retorna o status code correto(204)
   }
 
 
