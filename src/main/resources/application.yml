@@ -14,3 +14,7 @@ spring:
         
     show-sql: false
     open-in-view: false
+logging:
+  level:
+   # root: WARN 
+    https.github.com.FrancoBorba: DEBUG
