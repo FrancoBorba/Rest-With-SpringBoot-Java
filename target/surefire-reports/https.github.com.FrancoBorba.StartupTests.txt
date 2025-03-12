@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: https.github.com.FrancoBorba.StartupTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.259 s -- in https.github.com.FrancoBorba.StartupTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 16.84 s -- in https.github.com.FrancoBorba.StartupTests

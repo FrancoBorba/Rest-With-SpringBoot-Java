@@ -7,7 +7,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+
+
+import https.github.com.FrancoBorba.dataDTO.PersonDTO;
 import https.github.com.FrancoBorba.exception.ResourceNotFoundExcpetion;
+import static https.github.com.FrancoBorba.mapper.ObjectMapper.parseListObjetc;
+import static https.github.com.FrancoBorba.mapper.ObjectMapper.parseObjetc;
 import https.github.com.FrancoBorba.model.Person;
 import https.github.com.FrancoBorba.repository.PersonRepository;
 
@@ -23,33 +29,36 @@ public class PersonServices {
   @Autowired
   PersonRepository repository;
 
-  public Person findByID(Long id){  // achar o usuario pelo id
+  public PersonDTO findByID(Long id){  // achar o usuario pelo id
     logger.info("Find one person");
 
-    return repository.findById(id).orElseThrow(
+    var entity = repository.findById(id).orElseThrow(
       () -> new ResourceNotFoundExcpetion("No records found for this id")
     );
-
+    return parseObjetc(entity, PersonDTO.class);
   }
 
-  public List<Person> findAll(){ // criando um metodo de achar todos os usuarios
+  public List<PersonDTO> findAll(){ // criando um metodo de achar todos os usuarios
    
-
-    logger.info("Fnding all peolpe");
-
-    
+    logger.info("Fnding all peolpe"); 
       
-          return repository.findAll();
+        return parseListObjetc(repository.findAll() ,PersonDTO.class);
     }
       
 
 
-        public Person create(Person person){ // end point  POST
+        public PersonDTO create(PersonDTO person){ // end point  POST
         logger.info("Creating one Person");
-        return repository.save(person);
+
+       var entity = parseObjetc(person, Person.class); // converte de DTO para entity
+
+         repository.save(entity); // salva a entidade
+
+
+        return parseObjetc(entity, PersonDTO.class); // converte a entidade para DTO e retorna ela
         }
 
-         public Person update(Person person){ // end point  POST
+         public PersonDTO update(PersonDTO person){ // end point  POST
         logger.info("updating one Person");
         Person entity = repository.findById(person.getId()).orElseThrow(
       () -> new ResourceNotFoundExcpetion("No records found for this id"));
@@ -59,8 +68,8 @@ public class PersonServices {
         entity.setLastName(person.getLastName());
         entity.setAddress(person.getAddress());
         entity.setGender(person.getGender());
-        return repository.save(entity);
-    
+         repository.save(entity); // salva a entidade
+          return parseObjetc(entity, PersonDTO.class); // converte a entidade para DTO e retorna ela
          }
 
         public void delete(Long id){

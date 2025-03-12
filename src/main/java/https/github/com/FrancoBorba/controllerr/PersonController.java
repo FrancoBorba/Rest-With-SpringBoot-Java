@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import https.github.com.FrancoBorba.model.Person;
+import https.github.com.FrancoBorba.dataDTO.PersonDTO;
 import https.github.com.FrancoBorba.services.PersonServices;
 
 @RestController
@@ -26,14 +26,14 @@ public class PersonController {
 
   @GetMapping(value ="/{id}" ,
   produces = MediaType.APPLICATION_JSON_VALUE) 
-  public Person findByID( // end point GET
+  public PersonDTO findByID( // end point GET
     @PathVariable("id") Long id ){
       return service.findByID(id);
     }
 
   @GetMapping(  
   produces = MediaType.APPLICATION_JSON_VALUE)
-  public List<Person> findAll( ){ // end point GET
+  public List<PersonDTO> findAll( ){ // end point GET
     
       return service.findAll();
     }
@@ -42,7 +42,7 @@ public class PersonController {
     consumes = MediaType.APPLICATION_JSON_VALUE,
     produces = MediaType.APPLICATION_JSON_VALUE
   )
-  public Person create(@RequestBody Person person){
+  public PersonDTO create(@RequestBody PersonDTO person){
     return service.create(person);
   }
 
@@ -50,7 +50,7 @@ public class PersonController {
     consumes =  MediaType.APPLICATION_JSON_VALUE ,
     produces = MediaType.APPLICATION_JSON_VALUE
   )
-  public Person put(@RequestBody Person person){
+  public PersonDTO put(@RequestBody PersonDTO person){
     return service.update(person);
   }
 
