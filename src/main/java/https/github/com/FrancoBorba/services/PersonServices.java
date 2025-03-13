@@ -8,10 +8,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
-
-import https.github.com.FrancoBorba.dataDTO.PersonDTO;
+import https.github.com.FrancoBorba.dataDTO.v1.PersonDTO;
+import https.github.com.FrancoBorba.dataDTO.v2.PersonDTOV2;
 import https.github.com.FrancoBorba.exception.ResourceNotFoundExcpetion;
+import https.github.com.FrancoBorba.mapper.custom.PersonMapper;
+
 import static https.github.com.FrancoBorba.mapper.ObjectMapper.parseListObjetc;
 import static https.github.com.FrancoBorba.mapper.ObjectMapper.parseObjetc;
 import https.github.com.FrancoBorba.model.Person;
@@ -29,20 +30,23 @@ public class PersonServices {
   @Autowired
   PersonRepository repository;
 
+  @Autowired
+  PersonMapper converter;
+
   public PersonDTO findByID(Long id){  // achar o usuario pelo id
     logger.info("Find one person");
 
     var entity = repository.findById(id).orElseThrow(
       () -> new ResourceNotFoundExcpetion("No records found for this id")
     );
-    return parseObjetc(entity, PersonDTO.class);
+    return parseObjetc(entity, PersonDTO.class); // converte a entidade em PersonDTO
   }
 
   public List<PersonDTO> findAll(){ // criando um metodo de achar todos os usuarios
    
     logger.info("Fnding all peolpe"); 
       
-        return parseListObjetc(repository.findAll() ,PersonDTO.class);
+        return parseListObjetc(repository.findAll() ,PersonDTO.class); // converte a lista de Person(entity) em uma lista PersonDTO
     }
       
 
@@ -58,6 +62,18 @@ public class PersonServices {
         return parseObjetc(entity, PersonDTO.class); // converte a entidade para DTO e retorna ela
         }
 
+        
+        public PersonDTOV2 createV2(PersonDTOV2 person){ // end point  POST
+        logger.info("Creating one Person V2");
+
+       var entity = parseObjetc(person, Person.class); // converte de DTO para entity
+
+         repository.save(entity); // salva a entidade
+
+
+        return converter.convertEntityToDTO(entity); // converte a entidade para DTO e retorna ela
+        }
+
          public PersonDTO update(PersonDTO person){ // end point  POST
         logger.info("updating one Person");
         Person entity = repository.findById(person.getId()).orElseThrow(
@@ -68,7 +84,9 @@ public class PersonServices {
         entity.setLastName(person.getLastName());
         entity.setAddress(person.getAddress());
         entity.setGender(person.getGender());
+
          repository.save(entity); // salva a entidade
+         
           return parseObjetc(entity, PersonDTO.class); // converte a entidade para DTO e retorna ela
          }
 

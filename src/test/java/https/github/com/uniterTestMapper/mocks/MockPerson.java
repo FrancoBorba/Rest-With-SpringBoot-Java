@@ -3,7 +3,7 @@ package https.github.com.uniterTestMapper.mocks;
 import java.util.ArrayList;
 import java.util.List;
 
-import https.github.com.FrancoBorba.dataDTO.PersonDTO;
+import https.github.com.FrancoBorba.dataDTO.v1.PersonDTO;
 import https.github.com.FrancoBorba.model.Person;
 
 
