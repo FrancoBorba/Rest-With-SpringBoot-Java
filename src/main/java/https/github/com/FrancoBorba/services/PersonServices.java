@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import https.github.com.FrancoBorba.dataDTO.v1.PersonDTO;
-import https.github.com.FrancoBorba.dataDTO.v2.PersonDTOV2;
 import https.github.com.FrancoBorba.exception.ResourceNotFoundExcpetion;
-import https.github.com.FrancoBorba.mapper.custom.PersonMapper;
-
 import static https.github.com.FrancoBorba.mapper.ObjectMapper.parseListObjetc;
 import static https.github.com.FrancoBorba.mapper.ObjectMapper.parseObjetc;
 import https.github.com.FrancoBorba.model.Person;
@@ -22,6 +19,7 @@ import https.github.com.FrancoBorba.repository.PersonRepository;
 public class PersonServices {
 
 
+  @SuppressWarnings("unused")
   private final AtomicLong couter = new AtomicLong();
 
  private Logger logger = LoggerFactory.getLogger(PersonServices.class.getName());
@@ -30,8 +28,7 @@ public class PersonServices {
   @Autowired
   PersonRepository repository;
 
-  @Autowired
-  PersonMapper converter;
+
 
   public PersonDTO findByID(Long id){  // achar o usuario pelo id
     logger.info("Find one person");
@@ -63,16 +60,6 @@ public class PersonServices {
         }
 
         
-        public PersonDTOV2 createV2(PersonDTOV2 person){ // end point  POST
-        logger.info("Creating one Person V2");
-
-       var entity = parseObjetc(person, Person.class); // converte de DTO para entity
-
-         repository.save(entity); // salva a entidade
-
-
-        return converter.convertEntityToDTO(entity); // converte a entidade para DTO e retorna ela
-        }
 
          public PersonDTO update(PersonDTO person){ // end point  POST
         logger.info("updating one Person");
