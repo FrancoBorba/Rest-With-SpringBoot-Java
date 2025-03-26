@@ -1,7 +1,20 @@
 package https.github.com.FrancoBorba.dataDTO.v1;
 
 import java.io.Serializable;
+/*
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+ */
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import https.github.com.FrancoBorba.serializer.GenderSerializer;
+
+
+//@JsonPropertyOrder({"id" , "address" ,"first_name" , "last_name" ,  "gender"})
+/*A anotação @JsonPropertyOrder é usada na serialização de objetos JSON para definir a ordem dos campos no JSON gerado. No seu caso: */
 public class PersonDTO implements Serializable {
   
   private static final long serialVersionUID = 1L;
@@ -12,9 +25,21 @@ public class PersonDTO implements Serializable {
 
 
   private Long id;
+ // @JsonProperty("first_name") // permite mudar o json
   private String firstName;
+  //@JsonProperty("last_name") // permite mudar o json
+  @JsonInclude(JsonInclude.Include.NON_NULL) // só é renderizado se for diferente de null
   private String lastName;
+
+
+ 
+
+
+
+
   private String address;
+ // @JsonIgnore // omite o atributo do json
+ @JsonSerialize(using = GenderSerializer.class) // Serializer criado para gender
   private String gender;
 
   public Long getId() {
@@ -47,7 +72,10 @@ public class PersonDTO implements Serializable {
   public void setGender(String gender) {
     this.gender = gender;
   }
-  
+
+
+
+
   @Override
   public int hashCode() {
     final int prime = 31;
@@ -96,4 +124,7 @@ public class PersonDTO implements Serializable {
     return true;
   }
 
+ 
+  
+ 
 }
