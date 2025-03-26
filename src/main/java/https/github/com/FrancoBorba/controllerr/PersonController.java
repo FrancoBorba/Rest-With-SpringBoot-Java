@@ -17,7 +17,7 @@ import https.github.com.FrancoBorba.dataDTO.v1.PersonDTO;
 import https.github.com.FrancoBorba.services.PersonServices;
 
 @RestController
-@RequestMapping("/person")
+@RequestMapping("/api/person/v1")
 public class PersonController {
 
   @Autowired
