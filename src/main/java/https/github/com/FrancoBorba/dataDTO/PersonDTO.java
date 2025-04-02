@@ -1,4 +1,4 @@
-package https.github.com.FrancoBorba.dataDTO.v1;
+package https.github.com.FrancoBorba.dataDTO;
 
 import java.io.Serializable;
 /*
@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  */
+
+import org.springframework.hateoas.RepresentationModel;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -15,7 +17,7 @@ import https.github.com.FrancoBorba.serializer.GenderSerializer;
 
 //@JsonPropertyOrder({"id" , "address" ,"first_name" , "last_name" ,  "gender"})
 /*A anotação @JsonPropertyOrder é usada na serialização de objetos JSON para definir a ordem dos campos no JSON gerado. No seu caso: */
-public class PersonDTO implements Serializable {
+public class PersonDTO extends RepresentationModel<PersonDTO> implements Serializable {
   
   private static final long serialVersionUID = 1L;
 
@@ -79,7 +81,7 @@ public class PersonDTO implements Serializable {
   @Override
   public int hashCode() {
     final int prime = 31;
-    int result = 1;
+    int result = super.hashCode();
     result = prime * result + ((id == null) ? 0 : id.hashCode());
     result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
     result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
@@ -87,42 +89,7 @@ public class PersonDTO implements Serializable {
     result = prime * result + ((gender == null) ? 0 : gender.hashCode());
     return result;
   }
-  @Override
-  public boolean equals(Object obj) {
-    if (this == obj)
-      return true;
-    if (obj == null)
-      return false;
-    if (getClass() != obj.getClass())
-      return false;
-    PersonDTO other = (PersonDTO) obj;
-    if (id == null) {
-      if (other.id != null)
-        return false;
-    } else if (!id.equals(other.id))
-      return false;
-    if (firstName == null) {
-      if (other.firstName != null)
-        return false;
-    } else if (!firstName.equals(other.firstName))
-      return false;
-    if (lastName == null) {
-      if (other.lastName != null)
-        return false;
-    } else if (!lastName.equals(other.lastName))
-      return false;
-    if (address == null) {
-      if (other.address != null)
-        return false;
-    } else if (!address.equals(other.address))
-      return false;
-    if (gender == null) {
-      if (other.gender != null)
-        return false;
-    } else if (!gender.equals(other.gender))
-      return false;
-    return true;
-  }
+
 
  
   

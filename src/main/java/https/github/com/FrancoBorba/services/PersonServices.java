@@ -6,9 +6,13 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import org.springframework.stereotype.Service;
 
-import https.github.com.FrancoBorba.dataDTO.v1.PersonDTO;
+import https.github.com.FrancoBorba.controllerr.PersonController;
+import https.github.com.FrancoBorba.dataDTO.PersonDTO;
 import https.github.com.FrancoBorba.exception.ResourceNotFoundExcpetion;
 import static https.github.com.FrancoBorba.mapper.ObjectMapper.parseListObjetc;
 import static https.github.com.FrancoBorba.mapper.ObjectMapper.parseObjetc;
@@ -36,14 +40,22 @@ public class PersonServices {
     var entity = repository.findById(id).orElseThrow(
       () -> new ResourceNotFoundExcpetion("No records found for this id")
     );
-    return parseObjetc(entity, PersonDTO.class); // converte a entidade em PersonDTO
+    var dto = parseObjetc(entity, PersonDTO.class); // converte a entidade em PersonDTO
+    addHatoasLinks(dto);
+    return dto;
   }
+
+ 
 
   public List<PersonDTO> findAll(){ // criando um metodo de achar todos os usuarios
    
     logger.info("Fnding all peolpe"); 
       
-        return parseListObjetc(repository.findAll() ,PersonDTO.class); // converte a lista de Person(entity) em uma lista PersonDTO
+        var persons = parseListObjetc(repository.findAll() ,PersonDTO.class); // converte a lista de Person(entity) em uma lista PersonDTO
+          for (PersonDTO personDTO : persons) { // adiciona o link na lista
+            addHatoasLinks(personDTO);
+          }
+        return persons;
     }
       
 
@@ -56,7 +68,11 @@ public class PersonServices {
          repository.save(entity); // salva a entidade
 
 
-        return parseObjetc(entity, PersonDTO.class); // converte a entidade para DTO e retorna ela
+        var dto = parseObjetc(entity, PersonDTO.class); // converte a entidade para DTO e retorna ela
+
+        addHatoasLinks(dto);
+
+        return dto;
         }
 
         
@@ -74,7 +90,9 @@ public class PersonServices {
 
          repository.save(entity); // salva a entidade
          
-          return parseObjetc(entity, PersonDTO.class); // converte a entidade para DTO e retorna ela
+          var dto =parseObjetc(entity, PersonDTO.class); // converte a entidade para DTO e retorna ela
+          addHatoasLinks(dto);
+          return  dto;
          }
 
         public void delete(Long id){
@@ -87,5 +105,17 @@ public class PersonServices {
         repository.delete(entity);
         }
 
+
+ public  void addHatoasLinks( PersonDTO dto) {
+    dto.add(linkTo(methodOn(PersonController.class).findByID(dto.getId())).withSelfRel().withType("GET"));
+
+    dto.add(linkTo(methodOn(PersonController.class).findAll()).withRel("findAll").withType("GET"));
+
+    dto.add(linkTo(methodOn(PersonController.class).create(dto)).withRel("create").withType("POST"));
+
+    dto.add(linkTo(methodOn(PersonController.class).put(dto)).withRel("update").withType("PUT"));
+
+    dto.add(linkTo(methodOn(PersonController.class).delete(dto.getId())).withRel("delete").withType("DELETE"));
+  }
 
 }

@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import https.github.com.FrancoBorba.dataDTO.v1.PersonDTO;
+
+import https.github.com.FrancoBorba.dataDTO.PersonDTO;
 import https.github.com.FrancoBorba.services.PersonServices;
 
 @RestController
@@ -39,7 +40,7 @@ public class PersonController {
       MediaType.APPLICATION_JSON_VALUE ,
       MediaType.APPLICATION_XML_VALUE ,
       MediaType.APPLICATION_YAML_VALUE})
-  public List<PersonDTO> findAll( ){ // end point GET
+  public List<PersonDTO> findAll(){ // end point GET
     
       return service.findAll();
     }
