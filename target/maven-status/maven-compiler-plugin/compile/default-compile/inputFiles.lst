@@ -1,3 +1,4 @@
+C:\Users\Pichau\Desktop\estudos\Rest-With-SpringBoot-Java\src\main\java\https\github\com\FrancoBorba\config\WebConfig.java
 C:\Users\Pichau\Desktop\estudos\Rest-With-SpringBoot-Java\src\main\java\https\github\com\FrancoBorba\controllerr\PersonController.java
 C:\Users\Pichau\Desktop\estudos\Rest-With-SpringBoot-Java\src\main\java\https\github\com\FrancoBorba\controllerr\TesteLogController.java
 C:\Users\Pichau\Desktop\estudos\Rest-With-SpringBoot-Java\src\main\java\https\github\com\FrancoBorba\dataDTO\v1\PersonDTO.java
@@ -7,5 +8,6 @@ C:\Users\Pichau\Desktop\estudos\Rest-With-SpringBoot-Java\src\main\java\https\gi
 C:\Users\Pichau\Desktop\estudos\Rest-With-SpringBoot-Java\src\main\java\https\github\com\FrancoBorba\mapper\ObjectMapper.java
 C:\Users\Pichau\Desktop\estudos\Rest-With-SpringBoot-Java\src\main\java\https\github\com\FrancoBorba\model\Person.java
 C:\Users\Pichau\Desktop\estudos\Rest-With-SpringBoot-Java\src\main\java\https\github\com\FrancoBorba\repository\PersonRepository.java
+C:\Users\Pichau\Desktop\estudos\Rest-With-SpringBoot-Java\src\main\java\https\github\com\FrancoBorba\serializer\GenderSerializer.java
 C:\Users\Pichau\Desktop\estudos\Rest-With-SpringBoot-Java\src\main\java\https\github\com\FrancoBorba\services\PersonServices.java
 C:\Users\Pichau\Desktop\estudos\Rest-With-SpringBoot-Java\src\main\java\https\github\com\FrancoBorba\Startup.java

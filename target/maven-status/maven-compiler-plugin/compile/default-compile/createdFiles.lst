@@ -1,8 +1,10 @@
+https\github\com\FrancoBorba\config\WebConfig.class
 https\github\com\FrancoBorba\dataDTO\v1\PersonDTO.class
 https\github\com\FrancoBorba\exception\handler\CustomEntityResponseHandler.class
 https\github\com\FrancoBorba\controllerr\TesteLogController.class
 https\github\com\FrancoBorba\services\PersonServices.class
 https\github\com\FrancoBorba\model\Person.class
+https\github\com\FrancoBorba\serializer\GenderSerializer.class
 https\github\com\FrancoBorba\Startup.class
 https\github\com\FrancoBorba\mapper\ObjectMapper.class
 https\github\com\FrancoBorba\exception\ResourceNotFoundExcpetion.class

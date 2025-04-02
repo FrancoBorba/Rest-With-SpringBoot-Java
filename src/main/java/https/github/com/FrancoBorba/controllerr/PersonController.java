@@ -24,7 +24,10 @@ public class PersonController {
   private PersonServices service; // com a injencao de dependencia nao se precisa mais do new
 
   @GetMapping(value ="/{id}" ,
-  produces = MediaType.APPLICATION_JSON_VALUE) 
+  produces = { 
+      MediaType.APPLICATION_JSON_VALUE ,
+      MediaType.APPLICATION_XML_VALUE ,
+      MediaType.APPLICATION_YAML_VALUE} ) 
   public PersonDTO findByID( // end point GET
     @PathVariable("id") Long id ){
       
@@ -32,15 +35,24 @@ public class PersonController {
     }
 
   @GetMapping(  
-  produces = MediaType.APPLICATION_JSON_VALUE)
+  produces = { 
+      MediaType.APPLICATION_JSON_VALUE ,
+      MediaType.APPLICATION_XML_VALUE ,
+      MediaType.APPLICATION_YAML_VALUE})
   public List<PersonDTO> findAll( ){ // end point GET
     
       return service.findAll();
     }
 
   @PostMapping(
-    consumes = MediaType.APPLICATION_JSON_VALUE,
-    produces = MediaType.APPLICATION_JSON_VALUE
+     consumes =  { 
+      MediaType.APPLICATION_JSON_VALUE ,
+      MediaType.APPLICATION_XML_VALUE ,
+      MediaType.APPLICATION_YAML_VALUE} ,
+    produces = { 
+      MediaType.APPLICATION_JSON_VALUE ,
+      MediaType.APPLICATION_XML_VALUE ,
+      MediaType.APPLICATION_YAML_VALUE}
   )
   public PersonDTO create(@RequestBody PersonDTO person){
     return service.create(person);
@@ -49,8 +61,14 @@ public class PersonController {
    
 
   @PutMapping(
-    consumes =  MediaType.APPLICATION_JSON_VALUE ,
-    produces = MediaType.APPLICATION_JSON_VALUE
+    consumes =  { 
+      MediaType.APPLICATION_JSON_VALUE ,
+      MediaType.APPLICATION_XML_VALUE ,
+      MediaType.APPLICATION_YAML_VALUE} ,
+    produces = { 
+      MediaType.APPLICATION_JSON_VALUE ,
+      MediaType.APPLICATION_XML_VALUE ,
+      MediaType.APPLICATION_YAML_VALUE}
   )
   public PersonDTO put(@RequestBody PersonDTO person){
     return service.update(person);
