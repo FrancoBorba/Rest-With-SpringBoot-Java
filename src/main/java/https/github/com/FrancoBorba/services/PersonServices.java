@@ -1,7 +1,7 @@
 package https.github.com.FrancoBorba.services;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import https.github.com.FrancoBorba.controllerr.PersonController;
 import https.github.com.FrancoBorba.dataDTO.PersonDTO;
+import https.github.com.FrancoBorba.exception.RequiredObjectIsNullExcpetion;
 import https.github.com.FrancoBorba.exception.ResourceNotFoundExcpetion;
 import static https.github.com.FrancoBorba.mapper.ObjectMapper.parseListObjetc;
 import static https.github.com.FrancoBorba.mapper.ObjectMapper.parseObjetc;
@@ -24,7 +25,7 @@ public class PersonServices {
 
 
   @SuppressWarnings("unused")
-  private final AtomicLong couter = new AtomicLong();
+  
 
  private Logger logger = LoggerFactory.getLogger(PersonServices.class.getName());
 
@@ -61,6 +62,10 @@ public class PersonServices {
 
 
         public PersonDTO create(PersonDTO person){ // end point  POST
+
+        if(person == null){
+          throw new RequiredObjectIsNullExcpetion(); // lança excessão seo objeto for null
+        }
         logger.info("Creating one Person");
 
        var entity = parseObjetc(person, Person.class); // converte de DTO para entity
@@ -78,6 +83,11 @@ public class PersonServices {
         
 
          public PersonDTO update(PersonDTO person){ // end point  POST
+
+          if(person == null){
+          throw new RequiredObjectIsNullExcpetion(); // lança excessão seo objeto for null
+        }
+        
         logger.info("updating one Person");
         Person entity = repository.findById(person.getId()).orElseThrow(
       () -> new ResourceNotFoundExcpetion("No records found for this id"));
