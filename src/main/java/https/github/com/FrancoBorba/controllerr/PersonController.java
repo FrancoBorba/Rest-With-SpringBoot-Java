@@ -14,27 +14,32 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import https.github.com.FrancoBorba.controllerr.docs.PersonControllerDocs;
 import https.github.com.FrancoBorba.dataDTO.PersonDTO;
 import https.github.com.FrancoBorba.services.PersonServices;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/api/person/v1")
-public class PersonController {
+@Tag(name = "People" , description = "Endpoints for managing people")
+public class PersonController implements PersonControllerDocs {
 
   @Autowired
   private PersonServices service; // com a injencao de dependencia nao se precisa mais do new
 
+  @Override
   @GetMapping(value ="/{id}" ,
   produces = { 
       MediaType.APPLICATION_JSON_VALUE ,
       MediaType.APPLICATION_XML_VALUE ,
-      MediaType.APPLICATION_YAML_VALUE} ) 
+      MediaType.APPLICATION_YAML_VALUE})
   public PersonDTO findByID( // end point GET
     @PathVariable("id") Long id ){
-      
+
       return service.findByID(id);
     }
 
+  @Override
   @GetMapping(  
   produces = { 
       MediaType.APPLICATION_JSON_VALUE ,
@@ -45,6 +50,7 @@ public class PersonController {
       return service.findAll();
     }
 
+  @Override
   @PostMapping(
      consumes =  { 
       MediaType.APPLICATION_JSON_VALUE ,
@@ -61,6 +67,7 @@ public class PersonController {
 
    
 
+  @Override
   @PutMapping(
     consumes =  { 
       MediaType.APPLICATION_JSON_VALUE ,
@@ -75,6 +82,7 @@ public class PersonController {
     return service.update(person);
   }
 
+  @Override
   @DeleteMapping(value = "/{id}")
   public ResponseEntity<?> delete(@PathVariable("id") Long id){
      service.delete(id);
