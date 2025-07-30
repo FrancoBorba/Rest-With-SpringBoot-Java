@@ -1,4 +1,4 @@
-package https.github.com.uniterTestMapper.mocks;
+package https.github.com.FrancoBorba.unitTests.mapper.mocks;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

@@ -1,4 +1,4 @@
-package https.github.com.FrancoBorba.services;
+package https.github.com.FrancoBorba.unitTests.services;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,7 +12,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import https.github.com.FrancoBorba.dataDTO.BookDTO;
 import https.github.com.FrancoBorba.model.Book;
 import https.github.com.FrancoBorba.repository.BookRepoository;
-import https.github.com.uniterTestMapper.mocks.MockBook;
+import https.github.com.FrancoBorba.services.BookServices;
+import https.github.com.FrancoBorba.unitTests.mapper.mocks.MockBook;
 
 import java.util.List;
 import java.util.Optional;

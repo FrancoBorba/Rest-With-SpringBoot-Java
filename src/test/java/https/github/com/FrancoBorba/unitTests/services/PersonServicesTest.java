@@ -1,4 +1,4 @@
-package https.github.com.FrancoBorba.services;
+package https.github.com.FrancoBorba.unitTests.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -24,7 +24,8 @@ import https.github.com.FrancoBorba.dataDTO.PersonDTO;
 import https.github.com.FrancoBorba.exception.RequiredObjectIsNullExcpetion;
 import https.github.com.FrancoBorba.model.Person;
 import https.github.com.FrancoBorba.repository.PersonRepository;
-import https.github.com.uniterTestMapper.mocks.MockPerson;
+import https.github.com.FrancoBorba.services.PersonServices;
+import https.github.com.FrancoBorba.unitTests.mapper.mocks.MockPerson;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS) // os mocks duram apenas para esta classe
 @ExtendWith(MockitoExtension.class) // Diz ao JUnit 5 para usar a extensão do Mockito

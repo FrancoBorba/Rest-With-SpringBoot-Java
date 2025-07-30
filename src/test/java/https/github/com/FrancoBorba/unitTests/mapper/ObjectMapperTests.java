@@ -1,4 +1,4 @@
-package https.github.com.uniterTestMapper;
+package https.github.com.FrancoBorba.unitTests.mapper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static https.github.com.FrancoBorba.mapper.ObjectMapper.parseListObjetc;
@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import https.github.com.FrancoBorba.dataDTO.PersonDTO;
 import https.github.com.FrancoBorba.model.Person;
-import https.github.com.uniterTestMapper.mocks.MockPerson;
+import https.github.com.FrancoBorba.unitTests.mapper.mocks.MockPerson;
 
 
 
