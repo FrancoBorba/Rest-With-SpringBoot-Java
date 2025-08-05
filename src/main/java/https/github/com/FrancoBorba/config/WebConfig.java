@@ -1,13 +1,29 @@
 package https.github.com.FrancoBorba.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 //A anotação @Configuration no Spring indica que a classe contém definições de Beans e configurações para a aplicação.
 public class WebConfig implements WebMvcConfigurer{
+
+  @Value("${cors.originPatterns}")
+  private String crossOriginPatterns = "";
+
+  @Override
+  public void addCorsMappings(CorsRegistry registry){
+    var allowedOrigin =  crossOriginPatterns.split(",");
+
+    registry.addMapping("/**") // Adiciona cors em toda a aplicação
+    .allowedOrigins(allowedOrigin)
+    .allowedMethods("GET" , "POST" , "PUT" , "DELETE" , "PATCH")
+    .allowedMethods("*")
+      .allowCredentials(true);
+  }
 
 
   public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
@@ -38,4 +54,6 @@ public class WebConfig implements WebMvcConfigurer{
                               .mediaType("xml", MediaType.APPLICATION_XML)
                               .mediaType("yaml", MediaType.APPLICATION_YAML);
   }
+
+  
 }

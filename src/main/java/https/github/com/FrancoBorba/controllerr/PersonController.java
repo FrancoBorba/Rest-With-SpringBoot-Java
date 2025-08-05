@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,7 @@ import https.github.com.FrancoBorba.dataDTO.PersonDTO;
 import https.github.com.FrancoBorba.services.PersonServices;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+//@CrossOrigin("http://localhost:8080") Cross a nivel de controller
 @RestController
 @RequestMapping("/api/person/v1")
 @Tag(name = "People" , description = "Endpoints for managing people")
@@ -27,6 +29,7 @@ public class PersonController implements PersonControllerDocs {
   @Autowired
   private PersonServices service; // com a injencao de dependencia nao se precisa mais do new
 
+  @CrossOrigin("http://localhost:8080")
   @Override
   @GetMapping(value ="/{id}" ,
   produces = { 
@@ -50,6 +53,7 @@ public class PersonController implements PersonControllerDocs {
       return service.findAll();
     }
 
+    @CrossOrigin({"http://localhost:8080" , "https://www.erudio.com.br"})
   @Override
   @PostMapping(
      consumes =  { 

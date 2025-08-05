@@ -1,4 +1,4 @@
-package https.github.com.FrancoBorba.integrationTests.testContainers.swagger;
+package https.github.com.FrancoBorba.integrationTests.swagger;
 
 import static org.junit.Assert.assertTrue;
 
