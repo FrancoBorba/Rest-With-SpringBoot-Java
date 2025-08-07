@@ -44,6 +44,14 @@ public class PersonDTO extends RepresentationModel<PersonDTO> implements Seriali
  @JsonSerialize(using = GenderSerializer.class) // Serializer criado para gender
   private String gender;
 
+  private Boolean enabled;
+
+  public Boolean getEnabled() {
+    return enabled;
+  }
+  public void setEnabled(Boolean enabled) {
+    this.enabled = enabled;
+  }
   public Long getId() {
     return id;
   }
@@ -74,10 +82,6 @@ public class PersonDTO extends RepresentationModel<PersonDTO> implements Seriali
   public void setGender(String gender) {
     this.gender = gender;
   }
-
-
-
-
   @Override
   public int hashCode() {
     final int prime = 31;
@@ -87,8 +91,54 @@ public class PersonDTO extends RepresentationModel<PersonDTO> implements Seriali
     result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
     result = prime * result + ((address == null) ? 0 : address.hashCode());
     result = prime * result + ((gender == null) ? 0 : gender.hashCode());
+    result = prime * result + ((enabled == null) ? 0 : enabled.hashCode());
     return result;
   }
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (!super.equals(obj))
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
+    PersonDTO other = (PersonDTO) obj;
+    if (id == null) {
+      if (other.id != null)
+        return false;
+    } else if (!id.equals(other.id))
+      return false;
+    if (firstName == null) {
+      if (other.firstName != null)
+        return false;
+    } else if (!firstName.equals(other.firstName))
+      return false;
+    if (lastName == null) {
+      if (other.lastName != null)
+        return false;
+    } else if (!lastName.equals(other.lastName))
+      return false;
+    if (address == null) {
+      if (other.address != null)
+        return false;
+    } else if (!address.equals(other.address))
+      return false;
+    if (gender == null) {
+      if (other.gender != null)
+        return false;
+    } else if (!gender.equals(other.gender))
+      return false;
+    if (enabled == null) {
+      if (other.enabled != null)
+        return false;
+    } else if (!enabled.equals(other.enabled))
+      return false;
+    return true;
+  }
+
+
+
+
 
 
  

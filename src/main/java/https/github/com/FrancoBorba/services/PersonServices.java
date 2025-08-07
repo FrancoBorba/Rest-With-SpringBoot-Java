@@ -19,6 +19,7 @@ import static https.github.com.FrancoBorba.mapper.ObjectMapper.parseListObjetc;
 import static https.github.com.FrancoBorba.mapper.ObjectMapper.parseObjetc;
 import https.github.com.FrancoBorba.model.Person;
 import https.github.com.FrancoBorba.repository.PersonRepository;
+import jakarta.transaction.Transactional;
 
 @Service // permite a injencao de dependencia
 public class PersonServices {
@@ -104,16 +105,32 @@ public class PersonServices {
           addHatoasLinks(dto);
           return  dto;
          }
+    
+    @Transactional // Para implemenntar o ACID
+    public PersonDTO disablePerson(Long id){
+      logger.info("Disabling one person");
 
-        public void delete(Long id){
-          logger.info("Deleting one person");
+      Person entity = repository.findById(id)
+      .orElseThrow( () -> new ResourceNotFoundExcpetion("No records found for this id"));
 
-          Person entity = repository.findById(id).orElseThrow(
-      () -> new ResourceNotFoundExcpetion("No records found for this id")
-    );
+      repository.disablePerson(id);
 
-        repository.delete(entity);
-        }
+      var dto = parseObjetc(entity, PersonDTO.class);
+
+      addHatoasLinks(dto);
+
+      return dto;
+    }
+
+    public void delete(Long id){
+      logger.info("Deleting one person");
+
+    Person entity = repository.findById(id).orElseThrow(
+        () -> new ResourceNotFoundExcpetion("No records found for this id")
+      );
+
+    repository.delete(entity);
+    }
 
 
  public  void addHatoasLinks( PersonDTO dto) {
@@ -124,6 +141,8 @@ public class PersonServices {
     dto.add(linkTo(methodOn(PersonController.class).create(dto)).withRel("create").withType("POST"));
 
     dto.add(linkTo(methodOn(PersonController.class).put(dto)).withRel("update").withType("PUT"));
+
+     dto.add(linkTo(methodOn(PersonController.class).disablePerson(dto.getId())).withRel("disable").withType("PATCH"));
 
     dto.add(linkTo(methodOn(PersonController.class).delete(dto.getId())).withRel("delete").withType("DELETE"));
   }
