@@ -1,11 +1,17 @@
 package https.github.com.FrancoBorba.services;
 
-import java.util.List;
-
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.PagedModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
+
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
@@ -15,7 +21,6 @@ import https.github.com.FrancoBorba.controllerr.PersonController;
 import https.github.com.FrancoBorba.dataDTO.PersonDTO;
 import https.github.com.FrancoBorba.exception.RequiredObjectIsNullExcpetion;
 import https.github.com.FrancoBorba.exception.ResourceNotFoundExcpetion;
-import static https.github.com.FrancoBorba.mapper.ObjectMapper.parseListObjetc;
 import static https.github.com.FrancoBorba.mapper.ObjectMapper.parseObjetc;
 import https.github.com.FrancoBorba.model.Person;
 import https.github.com.FrancoBorba.repository.PersonRepository;
@@ -34,6 +39,9 @@ public class PersonServices {
   @Autowired
   PersonRepository repository;
 
+  @Autowired
+  PagedResourcesAssembler<PersonDTO> assembler;
+
 
 
   public PersonDTO findByID(Long id){  // achar o usuario pelo id
@@ -49,15 +57,25 @@ public class PersonServices {
 
  
 
-  public List<PersonDTO> findAll(){ // criando um metodo de achar todos os usuarios
+  public PagedModel<EntityModel<PersonDTO>> findAll(Pageable pageable){ // criando um metodo de achar todos os usuarios
    
     logger.info("Fnding all peolpe"); 
+
+    var people = repository.findAll(pageable);
+
+    var peopleWithLink = people.map(person ->{
+        var dto = parseObjetc(person, PersonDTO.class);
+        addHatoasLinks(dto);
+        return dto;
+    });
+
+    Link findAllLink = WebMvcLinkBuilder.linkTo(
+      WebMvcLinkBuilder.methodOn(PersonController.class).findAll(
+        pageable.getPageNumber() , pageable.getPageSize() , String.valueOf(pageable.getSort())))
+        .withSelfRel();
       
-        var persons = parseListObjetc(repository.findAll() ,PersonDTO.class); // converte a lista de Person(entity) em uma lista PersonDTO
-          for (PersonDTO personDTO : persons) { // adiciona o link na lista
-            addHatoasLinks(personDTO);
-          }
-        return persons;
+    
+        return assembler.toModel(peopleWithLink, findAllLink);
     }
       
 
@@ -136,7 +154,7 @@ public class PersonServices {
  public  void addHatoasLinks( PersonDTO dto) {
     dto.add(linkTo(methodOn(PersonController.class).findByID(dto.getId())).withSelfRel().withType("GET"));
 
-    dto.add(linkTo(methodOn(PersonController.class).findAll()).withRel("findAll").withType("GET"));
+    dto.add(linkTo(methodOn(PersonController.class).findAll(1,12 , "asc")).withRel("findAll").withType("GET"));
 
     dto.add(linkTo(methodOn(PersonController.class).create(dto)).withRel("create").withType("POST"));
 
