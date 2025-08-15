@@ -1,25 +1,29 @@
 package https.github.com.FrancoBorba.services;
 
 
-import static https.github.com.FrancoBorba.mapper.ObjectMapper.parseListObjetc;
-import static https.github.com.FrancoBorba.mapper.ObjectMapper.parseObjetc;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
-
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.PagedModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import org.springframework.stereotype.Service;
 
 import https.github.com.FrancoBorba.controllerr.BookController;
 import https.github.com.FrancoBorba.dataDTO.BookDTO;
 import https.github.com.FrancoBorba.exception.RequiredObjectIsNullExcpetion;
 import https.github.com.FrancoBorba.exception.ResourceNotFoundExcpetion;
+import static https.github.com.FrancoBorba.mapper.ObjectMapper.parseObjetc;
 import https.github.com.FrancoBorba.model.Book;
 import https.github.com.FrancoBorba.repository.BookRepoository;
-
 
 
 
@@ -29,7 +33,10 @@ public class BookServices {
   @Autowired // injeta a dependencia de do repositorio de book
   BookRepoository repository;
 
-  private Logger logger = LoggerFactory.getLogger(PersonServices.class.getName());
+  private Logger logger = LoggerFactory.getLogger(BookServices.class.getName());
+
+   @Autowired
+  PagedResourcesAssembler<BookDTO> assembler;
 
 
   public BookDTO findByID(Long id){
@@ -47,18 +54,27 @@ public class BookServices {
     
       }
 
-  public List<BookDTO> findAll(){
-    logger.info("Finding all books");
+  public PagedModel<EntityModel<BookDTO>> findAll(Pageable pageable) {
 
-    var books = parseListObjetc(repository.findAll(), BookDTO.class);
+        logger.info("Finding all Book!");
 
-    for(BookDTO book : books){
-      addHatoasLinks(book);
+        var books = repository.findAll(pageable);
+
+        var booksWithLinks = books.map(book -> {
+            var dto = parseObjetc(book, BookDTO.class);
+            addHatoasLinks(dto);
+            return dto;
+        });
+        
+        Link findAllLink = WebMvcLinkBuilder.linkTo(
+                        WebMvcLinkBuilder.methodOn(BookController.class)
+                                .findAll(
+                                        pageable.getPageNumber(),
+                                        pageable.getPageSize(),
+                                        String.valueOf(pageable.getSort())))
+                .withSelfRel();
+        return assembler.toModel(booksWithLinks, findAllLink);
     }
-
-    return books;
-    
-  }
 
   public BookDTO create(BookDTO book){
     if(book == null){
@@ -114,7 +130,7 @@ public class BookServices {
 
     book.add(linkTo(methodOn(BookController.class).findByID(book.getId())).withSelfRel().withType("GET"));
 
-    book.add(linkTo(methodOn(BookController.class).findAll()).withRel("FindALL").withType("GET"));
+    book.add(linkTo(methodOn(BookController.class).findAll(1,10,"asc")).withRel("FindALL").withType("GET"));
 
     book.add(linkTo(methodOn(BookController.class).create(book)).withRel("create").withType("POST"));
 

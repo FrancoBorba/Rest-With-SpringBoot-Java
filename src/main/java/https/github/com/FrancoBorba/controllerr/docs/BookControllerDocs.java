@@ -1,9 +1,12 @@
 package https.github.com.FrancoBorba.controllerr.docs;
 
-import java.util.List;
 
+
+import org.springframework.data.web.PagedModel;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import https.github.com.FrancoBorba.dataDTO.BookDTO;
 import io.swagger.v3.oas.annotations.Operation;
@@ -46,7 +49,11 @@ public interface BookControllerDocs {
     @ApiResponse(description = "Not found" , responseCode = "404" , content = @Content),
     @ApiResponse(description = "Internal Server Erro" , responseCode = "500" , content = @Content)
   })
-  List<BookDTO> findAll();
+  ResponseEntity<org.springframework.hateoas.PagedModel<EntityModel<BookDTO>>> findAll(
+    @RequestParam(value = "size" , defaultValue = "10") Integer size,
+    @RequestParam(value = "page" , defaultValue = "0") Integer page,
+    @RequestParam(value = "direction" , defaultValue = "asc") String direction
+  );
 
 
   @Operation(

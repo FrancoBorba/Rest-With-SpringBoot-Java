@@ -3,7 +3,6 @@ package https.github.com.FrancoBorba.controllerr;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -68,6 +67,28 @@ public class PersonController implements PersonControllerDocs {
       return ResponseEntity.ok(service.findAll(pageable)) ;
     }
 
+      @Override
+  @GetMapping(  
+    value = "/findPeopleByName/{firstName}",
+  produces = { 
+      MediaType.APPLICATION_JSON_VALUE ,
+      MediaType.APPLICATION_XML_VALUE ,
+      MediaType.APPLICATION_YAML_VALUE})
+ 
+  public ResponseEntity<PagedModel<EntityModel<PersonDTO>>> findByName(
+    @PathVariable("firstName") String firstName,
+    @RequestParam(value = "page" , defaultValue = "0") Integer page ,
+    @RequestParam(value = "size" , defaultValue = "12") Integer size,
+    @RequestParam(value = "direction" , defaultValue = "asc") String direction
+  ){ // end point GET
+    
+      var sortDirection = "desc".equalsIgnoreCase(direction) ? Direction.DESC : Direction.ASC;
+      Pageable pageable = PageRequest.of(page, size , Sort.by(sortDirection,"firstName"));
+      return ResponseEntity.ok(service.findByName(firstName,pageable)) ;
+    }
+
+
+
     @CrossOrigin({"http://localhost:8080" , "https://www.erudio.com.br"})
   @Override
   @PostMapping(
@@ -119,6 +140,7 @@ public class PersonController implements PersonControllerDocs {
   public PersonDTO disablePerson(@PathVariable("id") Long id) {
     return service.disablePerson(id);
   }
+
 
 
 

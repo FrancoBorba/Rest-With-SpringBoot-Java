@@ -5,7 +5,9 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import org.springframework.hateoas.RepresentationModel;
+import org.springframework.hateoas.server.core.Relation;
 
+@Relation(collectionRelation = "books")
 public class BookDTO extends RepresentationModel<BookDTO> implements Serializable {
 
   

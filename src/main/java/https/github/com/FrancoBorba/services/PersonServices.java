@@ -4,7 +4,6 @@ package https.github.com.FrancoBorba.services;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.EntityModel;
@@ -62,6 +61,27 @@ public class PersonServices {
     logger.info("Fnding all peolpe"); 
 
     var people = repository.findAll(pageable);
+
+    var peopleWithLink = people.map(person ->{
+        var dto = parseObjetc(person, PersonDTO.class);
+        addHatoasLinks(dto);
+        return dto;
+    });
+
+    Link findAllLink = WebMvcLinkBuilder.linkTo(
+      WebMvcLinkBuilder.methodOn(PersonController.class).findAll(
+        pageable.getPageNumber() , pageable.getPageSize() , String.valueOf(pageable.getSort())))
+        .withSelfRel();
+      
+    
+        return assembler.toModel(peopleWithLink, findAllLink);
+    }
+
+     public PagedModel<EntityModel<PersonDTO>> findByName(String firstName ,Pageable pageable){ // criando um metodo de achar todos os usuarios
+   
+    logger.info("Fnding  peolpe by name"); 
+
+    var people = repository.findPeopleByName(firstName,pageable);
 
     var peopleWithLink = people.map(person ->{
         var dto = parseObjetc(person, PersonDTO.class);
