@@ -15,12 +15,21 @@ import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+import java.io.InputStream;
+import java.util.List;
+import java.util.Optional;
+
+import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import https.github.com.FrancoBorba.controllerr.PersonController;
 import https.github.com.FrancoBorba.dataDTO.PersonDTO;
 import https.github.com.FrancoBorba.exception.RequiredObjectIsNullExcpetion;
 import https.github.com.FrancoBorba.exception.ResourceNotFoundExcpetion;
+import https.github.com.FrancoBorba.file.importer.contract.FileImporter;
+import https.github.com.FrancoBorba.file.importer.factory.FileImporterFactory;
+
 import static https.github.com.FrancoBorba.mapper.ObjectMapper.parseObjetc;
 import https.github.com.FrancoBorba.model.Person;
 import https.github.com.FrancoBorba.repository.PersonRepository;
@@ -41,6 +50,9 @@ public class PersonServices {
 
   @Autowired
   PagedResourcesAssembler<PersonDTO> assembler;
+
+  @Autowired
+  FileImporterFactory fileImporter;
 
 
 
@@ -66,10 +78,6 @@ public class PersonServices {
     return buildPagedModel(pageable, people);
     }
 
-
-
-
-
      public PagedModel<EntityModel<PersonDTO>> findByName(String firstName ,Pageable pageable){ // criando um metodo de achar todos os usuarios
    
     logger.info("Fnding  peolpe by name"); 
@@ -78,10 +86,8 @@ public class PersonServices {
 
     return buildPagedModel(pageable, people);
     }
-      
 
-
-        public PersonDTO create(PersonDTO person){ // end point  POST
+   public PersonDTO create(PersonDTO person){ // end point  POST
 
         if(person == null){
           throw new RequiredObjectIsNullExcpetion(); // lança excessão seo objeto for null
@@ -99,6 +105,38 @@ public class PersonServices {
 
         return dto;
         }
+
+         
+
+  public List<PersonDTO> creationPeopleFromPlanilha(MultipartFile file) throws Exception{ 
+    logger.info("Importing people from file"); 
+
+    if(file.isEmpty()){
+      throw new BadRequestException("Please set a valid file");
+    }
+
+    try (InputStream inputStream = file.getInputStream()) {
+      String fileName = Optional.ofNullable(file.getOriginalFilename())
+      .orElseThrow(()-> new BadRequestException("File name cannot be null"));
+
+      FileImporter fileImporter = this.fileImporter.getImporter(fileName);
+
+      List<Person> entities = fileImporter.importFile(inputStream).stream()
+       .map( dto -> repository.save(parseObjetc(dto, Person.class)))
+       .toList();
+
+  return entities.stream().map(
+    entity -> {
+      var dto = parseObjetc(entity, PersonDTO.class);
+      addHatoasLinks(dto);
+      return dto;
+    
+ } ).toList();
+  
+
+    }
+}
+
 
         
 

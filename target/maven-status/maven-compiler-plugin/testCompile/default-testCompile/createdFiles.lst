@@ -1,3 +1,13 @@
-https\github\com\FrancoBorba\StartupTests.class
-https\github\com\uniterTestMapper\mocks\MockPerson.class
-https\github\com\uniterTestMapper\ObjectMapperTests.class
+https\github\com\FrancoBorba\config\TestConfigs.class
+https\github\com\FrancoBorba\integrationTests\swagger\SwaggerIntegrationTest.class
+https\github\com\FrancoBorba\integrationTests\testContainers\AbstractIntegrationTest.class
+https\github\com\FrancoBorba\integrationTests\dto\PersonDTO.class
+https\github\com\FrancoBorba\unitTests\services\BookServicesTest.class
+https\github\com\FrancoBorba\unitTests\mapper\mocks\MockPerson.class
+https\github\com\FrancoBorba\integrationTests\controllerr\withJson\PersonControllerJsonTest$1.class
+https\github\com\FrancoBorba\unitTests\services\PersonServicesTest.class
+https\github\com\FrancoBorba\integrationTests\controllerr\corsWithJson\PersonControllerCorsTest.class
+https\github\com\FrancoBorba\unitTests\mapper\ObjectMapperTests.class
+https\github\com\FrancoBorba\integrationTests\testContainers\AbstractIntegrationTest$Initializer.class
+https\github\com\FrancoBorba\unitTests\mapper\mocks\MockBook.class
+https\github\com\FrancoBorba\integrationTests\controllerr\withJson\PersonControllerJsonTest.class

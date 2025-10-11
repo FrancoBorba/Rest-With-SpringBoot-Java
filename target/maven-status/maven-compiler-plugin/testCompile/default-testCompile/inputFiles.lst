@@ -1,3 +1,11 @@
-C:\Users\Pichau\Desktop\estudos\Rest-With-SpringBoot-Java\src\test\java\https\github\com\FrancoBorba\StartupTests.java
-C:\Users\Pichau\Desktop\estudos\Rest-With-SpringBoot-Java\src\test\java\https\github\com\uniterTestMapper\mocks\MockPerson.java
-C:\Users\Pichau\Desktop\estudos\Rest-With-SpringBoot-Java\src\test\java\https\github\com\uniterTestMapper\ObjectMapperTests.java
+C:\Users\Pichau\Desktop\estudos\Rest-With-SpringBoot-Java\src\test\java\https\github\com\FrancoBorba\config\TestConfigs.java
+C:\Users\Pichau\Desktop\estudos\Rest-With-SpringBoot-Java\src\test\java\https\github\com\FrancoBorba\integrationTests\controllerr\corsWithJson\PersonControllerCorsTest.java
+C:\Users\Pichau\Desktop\estudos\Rest-With-SpringBoot-Java\src\test\java\https\github\com\FrancoBorba\integrationTests\controllerr\withJson\PersonControllerCorsTest.java
+C:\Users\Pichau\Desktop\estudos\Rest-With-SpringBoot-Java\src\test\java\https\github\com\FrancoBorba\integrationTests\dto\PersonDTO.java
+C:\Users\Pichau\Desktop\estudos\Rest-With-SpringBoot-Java\src\test\java\https\github\com\FrancoBorba\integrationTests\swagger\SwaggerIntegrationTest.java
+C:\Users\Pichau\Desktop\estudos\Rest-With-SpringBoot-Java\src\test\java\https\github\com\FrancoBorba\integrationTests\testContainers\AbstractIntegrationTest.java
+C:\Users\Pichau\Desktop\estudos\Rest-With-SpringBoot-Java\src\test\java\https\github\com\FrancoBorba\unitTests\mapper\mocks\MockBook.java
+C:\Users\Pichau\Desktop\estudos\Rest-With-SpringBoot-Java\src\test\java\https\github\com\FrancoBorba\unitTests\mapper\mocks\MockPerson.java
+C:\Users\Pichau\Desktop\estudos\Rest-With-SpringBoot-Java\src\test\java\https\github\com\FrancoBorba\unitTests\mapper\ObjectMapperTests.java
+C:\Users\Pichau\Desktop\estudos\Rest-With-SpringBoot-Java\src\test\java\https\github\com\FrancoBorba\unitTests\services\BookServicesTest.java
+C:\Users\Pichau\Desktop\estudos\Rest-With-SpringBoot-Java\src\test\java\https\github\com\FrancoBorba\unitTests\services\PersonServicesTest.java

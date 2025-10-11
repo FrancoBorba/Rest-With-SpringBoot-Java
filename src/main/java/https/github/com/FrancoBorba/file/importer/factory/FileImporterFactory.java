@@ -26,7 +26,7 @@ public class FileImporterFactory {
       if(fileName.endsWith(".csv")){
         return context.getBean(CSVImporter.class);
        // return new CSVImporter();
-      } else if(fileName.endsWith(".xsls")){
+      } else if(fileName.endsWith(".xlsx")){
         return  context.getBean(XlsxImporter.class);
        // return new XlsxImporter();
       } else{

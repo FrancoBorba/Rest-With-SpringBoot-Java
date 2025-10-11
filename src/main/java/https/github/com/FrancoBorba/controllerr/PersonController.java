@@ -2,6 +2,8 @@ package https.github.com.FrancoBorba.controllerr;
 
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import https.github.com.FrancoBorba.controllerr.docs.PersonControllerDocs;
 import https.github.com.FrancoBorba.dataDTO.PersonDTO;
@@ -139,6 +142,24 @@ public class PersonController implements PersonControllerDocs {
   )
   public PersonDTO disablePerson(@PathVariable("id") Long id) {
     return service.disablePerson(id);
+  }
+
+  @Override
+  @PostMapping(
+    value = {"/massCreation"} ,
+      produces = { 
+      MediaType.APPLICATION_JSON_VALUE ,
+      MediaType.APPLICATION_XML_VALUE ,
+      MediaType.APPLICATION_YAML_VALUE}
+  )
+  public List<PersonDTO> massCreation(@RequestParam("file") MultipartFile file) {
+    try {
+      return service.creationPeopleFromPlanilha(file);
+    } catch (Exception e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    return null;
   }
 
 
