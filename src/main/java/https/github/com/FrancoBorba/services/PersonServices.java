@@ -4,6 +4,7 @@ package https.github.com.FrancoBorba.services;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedResourcesAssembler;
@@ -27,6 +28,8 @@ import https.github.com.FrancoBorba.controllerr.PersonController;
 import https.github.com.FrancoBorba.dataDTO.PersonDTO;
 import https.github.com.FrancoBorba.exception.RequiredObjectIsNullExcpetion;
 import https.github.com.FrancoBorba.exception.ResourceNotFoundExcpetion;
+import https.github.com.FrancoBorba.file.exporter.contract.FileExporter;
+import https.github.com.FrancoBorba.file.exporter.factory.FileExporterFactory;
 import https.github.com.FrancoBorba.file.importer.contract.FileImporter;
 import https.github.com.FrancoBorba.file.importer.factory.FileImporterFactory;
 
@@ -54,6 +57,9 @@ public class PersonServices {
   @Autowired
   FileImporterFactory fileImporter;
 
+  @Autowired 
+  FileExporterFactory fileExporter;
+
 
 
   public PersonDTO findByID(Long id){  // achar o usuario pelo id
@@ -76,6 +82,7 @@ public class PersonServices {
     var people = repository.findAll(pageable);
 
     return buildPagedModel(pageable, people);
+
     }
 
      public PagedModel<EntityModel<PersonDTO>> findByName(String firstName ,Pageable pageable){ // criando um metodo de achar todos os usuarios
@@ -136,6 +143,27 @@ public class PersonServices {
 
     }
 }
+
+public Resource exportPage(Pageable pageable , String accepthearder){ // criando um metodo de achar todos os usuarios
+   
+    logger.info("Exporting a peolpe page "); 
+
+    var people = repository.findAll(pageable)
+    .map(person -> parseObjetc(person, PersonDTO.class))
+    .getContent();
+
+    FileExporter exporter;
+    try {
+      exporter = this.fileExporter.getExporter(accepthearder);
+       return exporter.exportFile(people);
+    } catch (Exception e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+  return null;
+   
+    
+    }
 
 
         
@@ -215,6 +243,15 @@ public class PersonServices {
         dto.add(linkTo(methodOn(PersonController.class).put(dto)).withRel("update").withType("PUT"));
         dto.add(linkTo(methodOn(PersonController.class).disablePerson(dto.getId())).withRel("disable").withType("PATCH"));
         dto.add(linkTo(methodOn(PersonController.class).delete(dto.getId())).withRel("delete").withType("DELETE"));
+
+        
+        // Adiciona o link para exportar uma página
+        dto.add(linkTo(methodOn(PersonController.class)
+                .exportPage(0, 12, "asc", null)) // Parâmetros padrão usados como exemplo
+                .withRel("exportPage")
+                .withType("GET")
+                .withTitle("Export People"));
+      
   }
 
 }

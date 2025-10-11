@@ -5,12 +5,14 @@ package https.github.com.FrancoBorba.controllerr;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -28,8 +30,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import https.github.com.FrancoBorba.controllerr.docs.PersonControllerDocs;
 import https.github.com.FrancoBorba.dataDTO.PersonDTO;
+import https.github.com.FrancoBorba.file.exporter.MediaTypes;
 import https.github.com.FrancoBorba.services.PersonServices;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 
 //@CrossOrigin("http://localhost:8080") Cross a nivel de controller
 @RestController
@@ -161,6 +165,44 @@ public class PersonController implements PersonControllerDocs {
     }
     return null;
   }
+
+ 
+ @GetMapping(value = "/exportPage", produces = {
+            MediaTypes.APPLICATION_CSV_VALUE,
+            MediaTypes.APPLICATION_XLSX_VALUE})
+    @Override
+    public ResponseEntity<Resource> exportPage(
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "size", defaultValue = "12") Integer size,
+            @RequestParam(value = "direction", defaultValue = "asc") String direction,
+            HttpServletRequest request) {
+
+        var sortDirection = "desc".equalsIgnoreCase(direction) ? Direction.DESC : Direction.ASC;
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, "firstName"));
+
+        // Recupera o Accept do header
+        String acceptHeader = request.getHeader(HttpHeaders.ACCEPT);
+
+        // Gera o arquivo na camada de serviço
+        Resource file = service.exportPage(pageable, acceptHeader);
+
+        // Determina o tipo de conteúdo baseado no Accept Header
+        String contentType = acceptHeader != null ? acceptHeader : "application/octet-stream";
+
+        // Define a extensão do arquivo com base no tipo de conteúdo
+        String fileExtension = MediaTypes.APPLICATION_XLSX_VALUE.equalsIgnoreCase(acceptHeader) ? ".xlsx" : ".csv" ;
+
+        // Nome do arquivo padrão
+        String fileName = "people_exported" + fileExtension;
+
+        // Configura a resposta HTTP com o arquivo como anexo
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(contentType))
+                .header(
+                        HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=\"" + fileName + "\"")
+                .body(file);
+    }
 
 
 
