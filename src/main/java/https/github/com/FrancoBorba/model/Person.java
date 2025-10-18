@@ -1,12 +1,17 @@
 package https.github.com.FrancoBorba.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -38,6 +43,20 @@ public class Person implements Serializable {
 
   @Column( nullable = false)
   private Boolean enabled;
+
+  @Column(name = "wikipedia_profile_url" , length = 255)
+  private String urlProfile;
+
+  @Column(name = "photo_url" , length = 255)
+  private String urlPhoto;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+         name = "person_books",
+         joinColumns = @JoinColumn(name = "person_id"),
+         inverseJoinColumns = @JoinColumn(name = "book_id")
+    )
+  private List<Book> books;
 
   public Boolean getEnabled() {
     return enabled;
@@ -75,6 +94,20 @@ public class Person implements Serializable {
   public void setGender(String gender) {
     this.gender = gender;
   }
+
+  
+  public String getUrlProfile() {
+    return urlProfile;
+  }
+  public void setUrlProfile(String urlProfile) {
+    this.urlProfile = urlProfile;
+  }
+  public String getUrlPhoto() {
+    return urlPhoto;
+  }
+  public void setUrlPhoto(String urlPhoto) {
+    this.urlPhoto = urlPhoto;
+  }
   @Override
   public int hashCode() {
     final int prime = 31;
@@ -85,6 +118,9 @@ public class Person implements Serializable {
     result = prime * result + ((address == null) ? 0 : address.hashCode());
     result = prime * result + ((gender == null) ? 0 : gender.hashCode());
     result = prime * result + ((enabled == null) ? 0 : enabled.hashCode());
+    result = prime * result + ((urlProfile == null) ? 0 : urlProfile.hashCode());
+    result = prime * result + ((urlPhoto == null) ? 0 : urlPhoto.hashCode());
+    result = prime * result + ((books == null) ? 0 : books.hashCode());
     return result;
   }
   @Override
@@ -126,8 +162,22 @@ public class Person implements Serializable {
         return false;
     } else if (!enabled.equals(other.enabled))
       return false;
+    if (urlProfile == null) {
+      if (other.urlProfile != null)
+        return false;
+    } else if (!urlProfile.equals(other.urlProfile))
+      return false;
+    if (urlPhoto == null) {
+      if (other.urlPhoto != null)
+        return false;
+    } else if (!urlPhoto.equals(other.urlPhoto))
+      return false;
+    if (books == null) {
+      if (other.books != null)
+        return false;
+    } else if (!books.equals(other.books))
+      return false;
     return true;
   }
   
- 
 }

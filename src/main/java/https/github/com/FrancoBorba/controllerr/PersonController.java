@@ -3,6 +3,7 @@ package https.github.com.FrancoBorba.controllerr;
 
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -169,7 +170,9 @@ public class PersonController implements PersonControllerDocs {
  
  @GetMapping(value = "/exportPage", produces = {
             MediaTypes.APPLICATION_CSV_VALUE,
-            MediaTypes.APPLICATION_XLSX_VALUE})
+            MediaTypes.APPLICATION_XLSX_VALUE,
+            MediaTypes.APPLICATION_PDF_VALUE
+            })
     @Override
     public ResponseEntity<Resource> exportPage(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
@@ -186,14 +189,22 @@ public class PersonController implements PersonControllerDocs {
         // Gera o arquivo na camada de serviço
         Resource file = service.exportPage(pageable, acceptHeader);
 
+        Map<String , String> extensionMap = Map.of(
+          MediaTypes.APPLICATION_CSV_VALUE , "csv",
+           MediaTypes.APPLICATION_XLSX_VALUE , "xlsx",
+            MediaTypes.APPLICATION_PDF_VALUE , "pdf"
+        );
+
+        // Define a extensão do arquivo com base no tipo de conteúdo
+        String fileExtension = extensionMap.getOrDefault(acceptHeader, "");
+
+
+
         // Determina o tipo de conteúdo baseado no Accept Header
         String contentType = acceptHeader != null ? acceptHeader : "application/octet-stream";
 
-        // Define a extensão do arquivo com base no tipo de conteúdo
-        String fileExtension = MediaTypes.APPLICATION_XLSX_VALUE.equalsIgnoreCase(acceptHeader) ? ".xlsx" : ".csv" ;
-
         // Nome do arquivo padrão
-        String fileName = "people_exported" + fileExtension;
+        String fileName = "people_exported." + fileExtension;
 
         // Configura a resposta HTTP com o arquivo como anexo
         return ResponseEntity.ok()
@@ -203,6 +214,35 @@ public class PersonController implements PersonControllerDocs {
                         "attachment; filename=\"" + fileName + "\"")
                 .body(file);
     }
+
+ @Override
+ @GetMapping(
+  value = {"/export/{id}"} ,
+  produces = {
+    MediaTypes.APPLICATION_PDF_VALUE
+  }
+ )
+ public ResponseEntity<Resource> export(@PathVariable("id") Long id, HttpServletRequest request)  {
+  
+  String acceptHeader = request.getHeader(HttpHeaders.ACCEPT);
+
+  Resource file;
+  try {
+    file = service.exportPerson(id, acceptHeader);
+        return ResponseEntity.ok()
+    .contentType(MediaType.parseMediaType(acceptHeader))
+    .header(
+      HttpHeaders.CONTENT_DISPOSITION ,
+      "attachment; filename=peson.pdf"
+    ).body(file);
+  } catch (Exception e) {
+   
+    e.printStackTrace();
+  }
+
+return null;
+
+ }
 
 
 

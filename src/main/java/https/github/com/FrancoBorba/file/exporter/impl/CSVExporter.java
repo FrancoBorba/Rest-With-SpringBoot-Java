@@ -46,5 +46,11 @@ public class CSVExporter implements FileExporter {
    }
     return new ByteArrayResource(outputStream.toByteArray());
   }
+
+  @Override
+  public Resource exportPerson(PersonDTO person) throws Exception {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'exportPerson'");
+  }
   
 }

@@ -20,6 +20,8 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 
+import javax.management.RuntimeErrorException;
+
 import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -165,8 +167,29 @@ public Resource exportPage(Pageable pageable , String accepthearder){ // criando
     
     }
 
+  public Resource exportPerson(Long id , String acceptHeader) throws Exception{  // achar o usuario pelo id
+    logger.info("Export data of one person");
 
-        
+    var person = repository.findById(id)
+    .map(entity -> parseObjetc(entity, PersonDTO.class))
+    .orElseThrow(
+      () -> new ResourceNotFoundExcpetion("No records found for this id")
+    );
+    var dto = parseObjetc(person, PersonDTO.class); // converte a entidade em PersonDTO
+    addHatoasLinks(dto);
+
+    try{
+      FileExporter exporter = this.fileExporter.getExporter(acceptHeader);
+         return exporter.exportPerson(person);
+    }catch (Exception e){
+      throw new Exception();
+    }
+
+
+  }
+
+
+
 
          public PersonDTO update(PersonDTO person){ // end point  POST
 

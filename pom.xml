@@ -21,6 +21,7 @@
     <apache.poi.version>5.4.1</apache.poi.version>
     <commons-csv.version>1.10.0</commons-csv.version>
 	</properties>
+  
 	<dependencies>
 
 		<dependency>
@@ -100,6 +101,33 @@
         <artifactId>poi-ooxml</artifactId>
         <version>${apache.poi.version}</version>
     </dependency>
+    <dependency>
+        <groupId>net.sf.jasperreports</groupId>
+        <artifactId>jasperreports</artifactId>
+        <version>7.0.3</version>
+    </dependency>
+    <dependency>
+        <groupId>net.sf.jasperreports</groupId>
+        <artifactId>jasperreports-fonts</artifactId>
+        <version>7.0.3</version>
+    </dependency>
+      <dependency>
+        <groupId>net.sf.jasperreports</groupId>
+        <artifactId>jasperreports-pdf</artifactId>
+        <version>7.0.3</version>
+    </dependency>
+
+    <dependency>
+    <groupId>com.google.zxing</groupId>
+    <artifactId>javase</artifactId>
+    <version>3.5.3</version>
+</dependency>
+<dependency>
+    <groupId>com.google.zxing</groupId>
+    <artifactId>core</artifactId>
+    <version>3.5.3</version>
+</dependency>
+
 	</dependencies>
 
 	<build>

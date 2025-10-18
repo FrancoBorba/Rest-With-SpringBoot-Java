@@ -6,13 +6,18 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  */
-
-
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import https.github.com.FrancoBorba.model.Book;
 import https.github.com.FrancoBorba.serializer.GenderSerializer;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinColumns;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 
 
 //@JsonPropertyOrder({"id" , "address" ,"first_name" , "last_name" ,  "gender"})
@@ -33,10 +38,39 @@ public class PersonDTO  implements Serializable {
   @JsonInclude(JsonInclude.Include.NON_NULL) // só é renderizado se for diferente de null
   private String lastName;
 
+  
+  private String urlProfile;
 
- 
+  private String urlPhoto;
+
+  @ManyToMany(fetch = FetchType.EAGER)
+  @JoinTable(
+    name = "person_books",
+    joinColumns = @JoinColumn(name = "book_id"),
+    inverseJoinColumns = @JoinColumn(name = "person_id")
+  )
+  private List<Book> books;
 
 
+
+  public String getUrlProfile() {
+    return urlProfile;
+  }
+  public void setUrlProfile(String urlProfile) {
+    this.urlProfile = urlProfile;
+  }
+  public String getUrlPhoto() {
+    return urlPhoto;
+  }
+  public void setUrlPhoto(String urlPhoto) {
+    this.urlPhoto = urlPhoto;
+  }
+  public List<Book> getBooks() {
+    return books;
+  }
+  public void setBooks(List<Book> books) {
+    this.books = books;
+  }
 
 
   private String address;

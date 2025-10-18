@@ -67,5 +67,11 @@ public class XlsxExporter implements FileExporter {
         style.setAlignment(HorizontalAlignment.CENTER);
         return style;
     }
+
+    @Override
+    public Resource exportPerson(PersonDTO person) throws Exception {
+      // TODO Auto-generated method stub
+      throw new UnsupportedOperationException("Unimplemented method 'exportPerson'");
+    }
   
 }
