@@ -1,0 +1,125 @@
+package https.github.com.FrancoBorba.config;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+@ConfigurationProperties(prefix = "spring.mail")
+public class EmailConfig {
+
+    private String host;
+    private int port;
+    private String usernmae;
+    private String password;
+    private String from;
+    private String ssl;
+
+      public EmailConfig() {
+    }
+
+    
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
+    }
+
+    public String getUsernmae() {
+        return usernmae;
+    }
+
+    public void setUsernmae(String usernmae) {
+        this.usernmae = usernmae;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getFrom() {
+        return from;
+    }
+
+    public void setFrom(String from) {
+        this.from = from;
+    }
+
+    public String getSsl() {
+        return ssl;
+    }
+
+    public void setSsl(String ssl) {
+        this.ssl = ssl;
+    }
+
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((host == null) ? 0 : host.hashCode());
+        result = prime * result + port;
+        result = prime * result + ((usernmae == null) ? 0 : usernmae.hashCode());
+        result = prime * result + ((password == null) ? 0 : password.hashCode());
+        result = prime * result + ((from == null) ? 0 : from.hashCode());
+        result = prime * result + ((ssl == null) ? 0 : ssl.hashCode());
+        return result;
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        EmailConfig other = (EmailConfig) obj;
+        if (host == null) {
+            if (other.host != null)
+                return false;
+        } else if (!host.equals(other.host))
+            return false;
+        if (port != other.port)
+            return false;
+        if (usernmae == null) {
+            if (other.usernmae != null)
+                return false;
+        } else if (!usernmae.equals(other.usernmae))
+            return false;
+        if (password == null) {
+            if (other.password != null)
+                return false;
+        } else if (!password.equals(other.password))
+            return false;
+        if (from == null) {
+            if (other.from != null)
+                return false;
+        } else if (!from.equals(other.from))
+            return false;
+        if (ssl == null) {
+            if (other.ssl != null)
+                return false;
+        } else if (!ssl.equals(other.ssl))
+            return false;
+        return true;
+    }
+
+  
+    
+}
