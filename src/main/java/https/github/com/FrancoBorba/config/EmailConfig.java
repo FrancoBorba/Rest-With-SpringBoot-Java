@@ -9,7 +9,10 @@ public class EmailConfig {
 
     private String host;
     private int port;
-    private String usernmae;
+    private String username;
+
+
+
     private String password;
     private String from;
     private String ssl;
@@ -34,12 +37,13 @@ public class EmailConfig {
         this.port = port;
     }
 
-    public String getUsernmae() {
-        return usernmae;
+       public String getUsername() {
+        return username;
     }
 
-    public void setUsernmae(String usernmae) {
-        this.usernmae = usernmae;
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -73,7 +77,7 @@ public class EmailConfig {
         int result = 1;
         result = prime * result + ((host == null) ? 0 : host.hashCode());
         result = prime * result + port;
-        result = prime * result + ((usernmae == null) ? 0 : usernmae.hashCode());
+        result = prime * result + ((username == null) ? 0 : username.hashCode());
         result = prime * result + ((password == null) ? 0 : password.hashCode());
         result = prime * result + ((from == null) ? 0 : from.hashCode());
         result = prime * result + ((ssl == null) ? 0 : ssl.hashCode());
@@ -97,10 +101,10 @@ public class EmailConfig {
             return false;
         if (port != other.port)
             return false;
-        if (usernmae == null) {
-            if (other.usernmae != null)
+        if (username == null) {
+            if (other.username != null)
                 return false;
-        } else if (!usernmae.equals(other.usernmae))
+        } else if (!username.equals(other.username))
             return false;
         if (password == null) {
             if (other.password != null)

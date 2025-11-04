@@ -9,12 +9,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Service;
 
 import https.github.com.FrancoBorba.config.EmailConfig;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 
+@Service
 public class EmailSender implements Serializable {
 
     Logger logger = LoggerFactory.getLogger(EmailSender.class);
@@ -58,7 +60,7 @@ public class EmailSender implements Serializable {
         MimeMessage message = mailSender.createMimeMessage();
         try {
             MimeMessageHelper helper = new MimeMessageHelper(message , true);
-            helper.setFrom(config.getUsernmae());
+            helper.setFrom(config.getUsername());
             helper.setTo(recipients.toArray(new InternetAddress[0]));
             helper.setSubject(subject);
             helper.setText(body ,true);
@@ -71,7 +73,7 @@ public class EmailSender implements Serializable {
             reset();
         } catch (MessagingException e) {
            
-            throw new RuntimeException("Error sending the email" , e)
+            throw new RuntimeException("Error sending the email" , e);
         }
     }
 

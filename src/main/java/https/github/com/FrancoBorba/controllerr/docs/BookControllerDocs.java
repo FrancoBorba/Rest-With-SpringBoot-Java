@@ -2,7 +2,6 @@ package https.github.com.FrancoBorba.controllerr.docs;
 
 
 
-import org.springframework.data.web.PagedModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

@@ -1,7 +1,7 @@
 cors:
   originPatterns: http://localhost:8080 ,http://localhost:3000,https://www.erudio.com.br
 file:
-  upload-dir: /Users/Pichau/Desktop/estudos/UploadDir/RestWithSpringBootUploads
+  upload-dir: C:/Users/franc/uploads
 email:
   subject: "Default Subject"
   message: "Default Message"
@@ -27,8 +27,8 @@ spring:
     password: ${EMAIL_PASSWORD}
     properties:
       mail.smtp.auth: true
-      mail.smtp.starttls.enabled: true
-      mail.smptm.starttls.required: true
+      mail.smtp.starttls.enable: true
+      mail.smpt.starttls.required: true
   servlet:
     multipart:
       enabled: true
